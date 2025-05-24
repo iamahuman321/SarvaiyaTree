@@ -1,0 +1,840 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarvaiya Family | Birthdays</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00FFFF;
+            --neon-purple: #7B68EE;
+            --deep-blue: #0B0B2B;
+            --cyber-black: #0A0A1A;
+            --tech-gray: #1E1E2A;
+            --light-gray: #AAAAAA;
+            --highlight: #00FFFF;
+            --accent-1: #7B68EE;
+            --accent-2: #FF00FF;
+            --accent-3: #00FF9D;
+        }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--cyber-black);
+            color: white;
+            overflow-x: auto;
+            background-image: 
+                radial-gradient(circle at 25px 25px, rgba(123, 104, 238, 0.05) 2px, transparent 0),
+                radial-gradient(circle at 75px 75px, rgba(0, 255, 255, 0.05) 2px, transparent 0);
+            background-size: 100px 100px;
+        }
+        
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background-color: rgba(10, 10, 26, 0.8);
+            border-bottom: 1px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-logo span {
+            color: var(--neon-blue);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: var(--light-gray);
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: white;
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .tech-container {
+            min-height: 100vh;
+            padding: 6rem 1rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tech-title {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 3rem;
+            color: white;
+            position: relative;
+            letter-spacing: 2px;
+            margin-bottom: 3rem;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+        
+        .tech-title::before, .tech-title::after {
+            content: "//";
+            color: var(--neon-blue);
+            margin: 0 1rem;
+            font-size: 1.5rem;
+            font-weight: 400;
+            opacity: 0.7;
+        }
+        
+        .tech-subtitle {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.2rem;
+            color: var(--light-gray);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .birthday-timeline {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--neon-blue), var(--accent-1), var(--accent-2));
+            transform: translateX(-50%);
+            z-index: 1;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+        
+        .birthday-card {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .birthday-card:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .date-marker {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--tech-gray);
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            z-index: 3;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .date-marker::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            background: conic-gradient(var(--neon-blue), var(--neon-purple), var(--accent-2), var(--accent-3), var(--neon-blue));
+            animation: rotate 4s linear infinite;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .date-month {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--neon-blue);
+            margin-bottom: -5px;
+        }
+        
+        .date-day {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+        }
+        
+        .birthday-content {
+            width: calc(50% - 60px);
+            background: linear-gradient(145deg, rgba(30, 30, 42, 0.9), rgba(15, 15, 26, 0.9));
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        
+        .birthday-content:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+        }
+        
+        .birthday-card:nth-child(odd) .birthday-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            transform: translateY(-50%);
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid rgba(0, 255, 255, 0.2);
+        }
+        
+        .birthday-card:nth-child(even) .birthday-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -10px;
+            transform: translateY(-50%);
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid rgba(0, 255, 255, 0.2);
+        }
+        
+        .birthday-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .birthday-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            border: 2px solid var(--neon-blue);
+            object-fit: cover;
+        }
+        
+        .birthday-info {
+            flex: 1;
+        }
+        
+        .birthday-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        
+        .birthday-role {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.9rem;
+            color: var(--neon-blue);
+        }
+        
+        .birthday-countdown {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+        }
+        
+        .countdown-label {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.8rem;
+            color: var(--light-gray);
+            margin-bottom: 0.3rem;
+        }
+        
+        .countdown-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+        
+        .special-date {
+            position: relative;
+        }
+        
+        .special-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--accent-2);
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+            z-index: 5;
+        }
+        
+        .next-birthday-highlight {
+            border-color: var(--accent-3);
+            box-shadow: 0 0 30px rgba(0, 255, 157, 0.3);
+        }
+        
+        .next-birthday-highlight .date-marker {
+            border-color: var(--accent-3);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.4);
+        }
+        
+        .next-birthday-highlight .date-month {
+            color: var(--accent-3);
+        }
+        
+        .next-birthday-tag {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-3);
+            color: var(--deep-blue);
+            font-size: 0.8rem;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.5);
+            z-index: 10;
+        }
+        
+        .tech-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(11, 11, 43, 0.1), rgba(10, 10, 26, 0.1));
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .tech-decoration {
+            position: absolute;
+            background-color: rgba(0, 255, 255, 0.03);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            border-radius: 4px;
+            transform: rotate(45deg);
+            z-index: -1;
+        }
+        
+        .tech-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            background: transparent;
+            z-index: -1;
+        }
+        
+        .pulse {
+            animation: pulse 5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.2); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 255, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(45deg); }
+            50% { transform: translateY(-15px) rotate(45deg); }
+            100% { transform: translateY(0px) rotate(45deg); }
+        }
+        
+        .scanning {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                rgba(0, 255, 255, 0.03) 50%, 
+                transparent 100%);
+            background-size: 100% 20px;
+            animation: scan 10s linear infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 40px;
+            }
+            
+            .birthday-card {
+                flex-direction: row !important;
+            }
+            
+            .birthday-card:nth-child(even) {
+                flex-direction: row !important;
+            }
+            
+            .birthday-content {
+                width: calc(100% - 110px);
+                margin-left: 30px;
+            }
+            
+            .birthday-card:nth-child(odd) .birthday-content::before,
+            .birthday-card:nth-child(even) .birthday-content::before {
+                left: -10px;
+                right: auto;
+                border-left: none;
+                border-right: 10px solid rgba(0, 255, 255, 0.2);
+            }
+            
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .tech-title {
+                font-size: 2rem;
+            }
+            
+            .tech-title::before, .tech-title::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Tech Background Elements -->
+    <div class="tech-overlay"></div>
+    <div class="scanning"></div>
+    
+    <!-- Tech Decoration Elements -->
+    <div class="tech-decoration" style="width: 150px; height: 150px; top: 20%; left: 5%; opacity: 0.5;"></div>
+    <div class="tech-decoration floating" style="width: 80px; height: 80px; top: 60%; right: 10%; opacity: 0.3;"></div>
+    <div class="tech-decoration" style="width: 120px; height: 120px; bottom: 15%; left: 15%; opacity: 0.4;"></div>
+    <div class="tech-circle pulse" style="width: 200px; height: 200px; top: 10%; right: 15%; opacity: 0.2;"></div>
+    <div class="tech-circle" style="width: 300px; height: 300px; bottom: 10%; left: 10%; opacity: 0.1;"></div>
+    
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <div class="nav-logo">
+                <span>SARVAIYA</span>&nbsp;TECH-TREE
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Family Tree</a>
+                <a href="memberlist.html" class="nav-link">Member List</a>
+                <a href="birthdays.html" class="nav-link active">Birthdays</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="tech-container">
+        <!-- Main Title -->
+        <h1 class="tech-title">Birthday Timeline</h1>
+        <p class="tech-subtitle">Upcoming celebrations in chronological order</p>
+        
+        <!-- Birthday Timeline -->
+        <div class="birthday-timeline">
+            <div class="timeline-line"></div>
+            
+            <!-- Timeline items will be populated here via JavaScript -->
+        </div>
+    </div>
+    
+    <script>
+        // Family data with corrected details
+        const familyData = {
+            "Dinesh Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Dinesh+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
+                role: "Family Patriarch",
+                gender: "male",
+                birthdate: "January 1, 1950",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "dinesh@family.com",
+                relation: "Husband of Kailashben, Father of Sandip, Ajaybhai, and Varshaben",
+                family: ["Kailashben Sarvaiya (Wife)", "Sandip Sarvaiya (Son)", "Ajaybhai Sarvaiya (Son)", "Varshaben Makvana (Daughter, née Sarvaiya)"]
+            },
+            "Kailashben Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Kailashben+Sarvaiya&background=0B0B2B&color=FF00FF&size=256",
+                role: "Family Matriarch",
+                gender: "female",
+                birthdate: "January 1, 1955",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "kailashben@family.com",
+                relation: "Wife of Dinesh, Mother of Sandip, Ajaybhai, and Varshaben",
+                family: ["Dinesh Sarvaiya (Husband)", "Sandip Sarvaiya (Son)", "Ajaybhai Sarvaiya (Son)", "Varshaben Makvana (Daughter, née Sarvaiya)"]
+            },
+            "Sandip Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Sandip+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
+                role: "Eldest Son",
+                gender: "male",
+                birthdate: "March 15, 1980",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "sandip@family.com",
+                relation: "Son of Dinesh and Kailashben, Husband of Vandana, Father of Harsh",
+                family: ["Dinesh Sarvaiya (Father)", "Kailashben Sarvaiya (Mother)", "Vandana Sarvaiya (Wife, née Gohel)", "Harsh Sarvaiya (Son)"]
+            },
+            "Vandana Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Vandana+Gohel&background=0B0B2B&color=FF00FF&size=256",
+                role: "Daughter-in-law",
+                gender: "female",
+                birthdate: "April 22, 1982",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "vandana@family.com",
+                relation: "Wife of Sandip (née Gohel), Mother of Harsh",
+                family: ["Sandip Sarvaiya (Husband)", "Harsh Sarvaiya (Son)"]
+            },
+            "Harsh Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Harsh+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
+                role: "Only Child",
+                gender: "male",
+                birthdate: "September 10, 2005",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "harsh@family.com",
+                relation: "Son of Sandip and Vandana",
+                family: ["Sandip Sarvaiya (Father)", "Vandana Sarvaiya (Mother, née Gohel)"]
+            },
+            "Ajaybhai Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Ajaybhai+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
+                role: "Middle Son",
+                gender: "male",
+                birthdate: "July 8, 1982",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "ajaybhai@family.com",
+                relation: "Son of Dinesh and Kailashben, Husband of Renaben, Father of Deivik and Devanshi",
+                family: ["Dinesh Sarvaiya (Father)", "Kailashben Sarvaiya (Mother)", "Renaben Sarvaiya (Wife)", "Deivik Sarvaiya (Son)", "Devanshi Sarvaiya (Daughter)"]
+            },
+            "Renaben Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Renaben+Sarvaiya&background=0B0B2B&color=FF00FF&size=256",
+                role: "Daughter-in-law",
+                gender: "female",
+                birthdate: "October 15, 1984",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "renaben@family.com",
+                relation: "Wife of Ajaybhai, Mother of Deivik and Devanshi",
+                family: ["Ajaybhai Sarvaiya (Husband)", "Deivik Sarvaiya (Son)", "Devanshi Sarvaiya (Daughter)"]
+            },
+            "Deivik Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Deivik+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
+                role: "First Grandchild",
+                gender: "male",
+                birthdate: "February 18, 2010",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "deivik@family.com",
+                relation: "Son of Ajaybhai and Renaben",
+                family: ["Ajaybhai Sarvaiya (Father)", "Renaben Sarvaiya (Mother)", "Devanshi Sarvaiya (Sister)"]
+            },
+            "Devanshi Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Devanshi+Sarvaiya&background=0B0B2B&color=FF00FF&size=256",
+                role: "Second Grandchild",
+                gender: "female",
+                birthdate: "June 5, 2012",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "devanshi@family.com",
+                relation: "Daughter of Ajaybhai and Renaben",
+                family: ["Ajaybhai Sarvaiya (Father)", "Renaben Sarvaiya (Mother)", "Deivik Sarvaiya (Brother)"]
+            },
+            "Varshaben Makvana": {
+                image: "https://ui-avatars.com/api/?name=Varshaben+Makvana&background=0B0B2B&color=FF00FF&size=256",
+                role: "Daughter",
+                gender: "female",
+                birthdate: "May 27, 1985",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "varshaben@family.com",
+                relation: "Daughter of Dinesh and Kailashben (née Sarvaiya), Wife of Foa, Mother of Vraj and Richa",
+                family: ["Dinesh Sarvaiya (Father)", "Kailashben Sarvaiya (Mother)", "Foa Makvana (Husband)", "Vraj Makvana (Son)", "Richa Makvana (Daughter)"]
+            },
+            "Foa Makvana": {
+                image: "https://ui-avatars.com/api/?name=Foa+Makvana&background=0B0B2B&color=00FFFF&size=256",
+                role: "Son-in-law",
+                gender: "male",
+                birthdate: "November 11, 1983",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "foa@family.com",
+                relation: "Husband of Varshaben, Father of Vraj and Richa",
+                family: ["Varshaben Makvana (Wife, née Sarvaiya)", "Vraj Makvana (Son)", "Richa Makvana (Daughter)"]
+            },
+            "Vraj Makvana": {
+                image: "https://ui-avatars.com/api/?name=Vraj+Makvana&background=0B0B2B&color=00FFFF&size=256",
+                role: "Third Grandchild",
+                gender: "male",
+                birthdate: "August 30, 2011",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "vraj@family.com",
+                relation: "Son of Varshaben and Foa",
+                family: ["Varshaben Makvana (Mother, née Sarvaiya)", "Foa Makvana (Father)", "Richa Makvana (Sister)"]
+            },
+            "Richa Makvana": {
+                image: "https://ui-avatars.com/api/?name=Richa+Makvana&background=0B0B2B&color=FF00FF&size=256",
+                role: "Fourth Grandchild",
+                gender: "female",
+                birthdate: "December 25, 2014",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "richa@family.com",
+                relation: "Daughter of Varshaben and Foa",
+                family: ["Varshaben Makvana (Mother, née Sarvaiya)", "Foa Makvana (Father)", "Vraj Makvana (Brother)"]
+            }
+        };
+
+        // Helper function to parse birthdate strings
+        function parseDate(dateString) {
+            const parts = dateString.split(' ');
+            const month = parts[0];
+            const day = parseInt(parts[1].replace(',', ''));
+            return { month, day };
+        }
+
+        // Function to calculate days until next birthday
+        function getDaysUntilBirthday(birthdate) {
+            const today = new Date();
+            const birthdateParts = parseDate(birthdate);
+            
+            const monthNames = ["January", "February", "March", "April", "May", "June", 
+                               "July", "August", "September", "October", "November", "December"];
+            
+            const birthMonth = monthNames.indexOf(birthdateParts.month);
+            const birthDay = birthdateParts.day;
+            
+            // Create date for this year's birthday
+            const thisYearBirthday = new Date(today.getFullYear(), birthMonth, birthDay);
+            
+            // If the birthday has already occurred this year, calculate for next year
+            if (today > thisYearBirthday) {
+                thisYearBirthday.setFullYear(today.getFullYear() + 1);
+            }
+            
+            // Calculate the difference in days
+            const diffTime = thisYearBirthday - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            return diffDays;
+        }
+
+        // Function to get age from birthdate
+        function getAge(birthdate) {
+            const birthdateParts = birthdate.split(' ');
+            const year = parseInt(birthdateParts[2]);
+            const currentYear = new Date().getFullYear();
+            return currentYear - year;
+        }
+
+        // Sort family members by days until next birthday
+        function sortByUpcomingBirthday() {
+            const members = [];
+            
+            for (const [name, data] of Object.entries(familyData)) {
+                const daysUntil = getDaysUntilBirthday(data.birthdate);
+                const age = getAge(data.birthdate);
+                const upcomingAge = age + (daysUntil > 0 ? 1 : 0);
+                
+                members.push({
+                    name,
+                    data,
+                    daysUntil,
+                    upcomingAge
+                });
+            }
+            
+            return members.sort((a, b) => a.daysUntil - b.daysUntil);
+        }
+
+        // Function to create birthday timeline
+        function createBirthdayTimeline() {
+            const birthdayTimeline = document.querySelector('.birthday-timeline');
+            const sortedMembers = sortByUpcomingBirthday();
+            
+            sortedMembers.forEach((member, index) => {
+                const { name, data, daysUntil, upcomingAge } = member;
+                
+                // Parse the date
+                const dateParts = parseDate(data.birthdate);
+                
+                // Create birthday card
+                const birthdayCard = document.createElement('div');
+                birthdayCard.className = 'birthday-card';
+                
+                // Add highlight for next birthday
+                if (index === 0) {
+                    birthdayCard.innerHTML = `
+                        <span class="next-birthday-tag">NEXT BIRTHDAY</span>
+                    `;
+                }
+                
+                const birthdayContent = document.createElement('div');
+                birthdayContent.className = `birthday-content ${index === 0 ? 'next-birthday-highlight' : ''}`;
+                
+                // Special badge for milestone birthdays or Christmas
+                let specialBadge = '';
+                if (upcomingAge % 10 === 0) {
+                    specialBadge = `<span class="special-badge">MILESTONE ${upcomingAge}</span>`;
+                } else if (dateParts.month === 'December' && dateParts.day === 25) {
+                    specialBadge = `<span class="special-badge">CHRISTMAS BABY!</span>`;
+                }
+                
+                birthdayContent.innerHTML = `
+                    <div class="birthday-header">
+                        <img src="${data.image}" alt="${name}" class="birthday-image">
+                        <div class="birthday-info">
+                            <h3 class="birthday-name">${name}</h3>
+                            <p class="birthday-role">${data.role}</p>
+                        </div>
+                    </div>
+                    <div class="birthday-countdown">
+                        <p class="countdown-label">Days until next birthday:</p>
+                        <p class="countdown-value">${daysUntil} ${daysUntil === 0 ? '(TODAY!)' : 'days'}</p>
+                    </div>
+                    ${specialBadge}
+                `;
+                
+                const dateMarker = document.createElement('div');
+                dateMarker.className = `date-marker ${index === 0 ? 'next-birthday-highlight' : ''}`;
+                dateMarker.innerHTML = `
+                    <span class="date-month">${dateParts.month.substr(0, 3)}</span>
+                    <span class="date-day">${dateParts.day}</span>
+                `;
+                
+                birthdayCard.appendChild(birthdayContent);
+                birthdayCard.appendChild(dateMarker);
+                
+                birthdayTimeline.appendChild(birthdayCard);
+            });
+        }
+
+        // Initialize birthday timeline
+        createBirthdayTimeline();
+        
+        // Add tech decoration elements dynamically
+        function createTechElements() {
+            const container = document.querySelector('.tech-container');
+            
+            for (let i = 0; i < 15; i++) {
+                const size = Math.random() * 50 + 10;
+                const tech = document.createElement('div');
+                tech.className = 'tech-decoration';
+                tech.style.width = `${size}px`;
+                tech.style.height = `${size}px`;
+                tech.style.top = `${Math.random() * 100}%`;
+                tech.style.left = `${Math.random() * 100}%`;
+                tech.style.opacity = Math.random() * 0.15;
+                
+                if (Math.random() > 0.7) {
+                    tech.classList.add('floating');
+                }
+                
+                container.appendChild(tech);
+            }
+            
+            for (let i = 0; i < 5; i++) {
+                const size = Math.random() * 150 + 50;
+                const circle = document.createElement('div');
+                circle.className = 'tech-circle';
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                circle.style.top = `${Math.random() * 100}%`;
+                circle.style.left = `${Math.random() * 100}%`;
+                circle.style.opacity = Math.random() * 0.1;
+                
+                if (Math.random() > 0.5) {
+                    circle.classList.add('pulse');
+                }
+                
+                container.appendChild(circle);
+            }
+        }
+        
+        createTechElements();
+    </script>
+</body>
+</html>
