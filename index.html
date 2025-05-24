@@ -1231,30 +1231,30 @@
             "Sandip Sarvaiya": {
                 image: "https://ui-avatars.com/api/?name=Sandip+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
                 role: "Eldest Son",
-                birthdate: "January 1, 1980",
-                location: "Gujarat, India",
-                phone: "+91 XXXXX XXXXX",
-                email: "sandip@family.com",
+                birthdate: "April 7, 1986",
+                location: "Bergen, Norway",
+                phone: "+47 XXX XX XXX",
+                email: "sandip.sarvaiya@gmail.com",
                 relation: "Son of Dinesh and Kailashben, Husband of Vandana, Father of Harsh",
                 family: ["Dinesh Sarvaiya (Father)", "Kailashben Sarvaiya (Mother)", "Vandana Sarvaiya (Wife, née Gohel)", "Harsh Sarvaiya (Son)"]
             },
             "Vandana Sarvaiya": {
                 image: "https://ui-avatars.com/api/?name=Vandana+Gohel&background=0B0B2B&color=FF00FF&size=256",
                 role: "Daughter-in-law",
-                birthdate: "January 1, 1982",
-                location: "Gujarat, India",
-                phone: "+91 XXXXX XXXXX",
-                email: "vandana@family.com",
+                birthdate: "January 12, 1987",
+                location: "Bergen, Norway",
+                phone: "+47 XXX XX XXX",
+                email: "vandana.sarvaiya@gmail.com",
                 relation: "Wife of Sandip (née Gohel), Mother of Harsh",
                 family: ["Sandip Sarvaiya (Husband)", "Harsh Sarvaiya (Son)"]
             },
             "Harsh Sarvaiya": {
                 image: "https://ui-avatars.com/api/?name=Harsh+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
                 role: "Only Child",
-                birthdate: "January 1, 2005",
-                location: "Gujarat, India",
-                phone: "+91 XXXXX XXXXX",
-                email: "harsh@family.com",
+                birthdate: "March 5, 2012",
+                location: "Bergen, Norway",
+                phone: "+47 925 33 066",
+                email: "harshrubiks@gmail.com",
                 relation: "Son of Sandip and Vandana",
                 family: ["Sandip Sarvaiya (Father)", "Vandana Sarvaiya (Mother, née Gohel)"]
             },
@@ -1262,8 +1262,8 @@
                 image: "https://ui-avatars.com/api/?name=Ajaybhai+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
                 role: "Middle Son",
                 birthdate: "January 1, 1982",
-                location: "Gujarat, India",
-                phone: "+91 XXXXX XXXXX",
+                location: "Ohio, US",
+                phone: "+1 XXXXX XXXXX",
                 email: "ajaybhai@family.com",
                 relation: "Son of Dinesh and Kailashben, Husband of Renaben, Father of Deivik and Devanshi",
                 family: ["Dinesh Sarvaiya (Father)", "Kailashben Sarvaiya (Mother)", "Renaben Sarvaiya (Wife)", "Deivik Sarvaiya (Son)", "Devanshi Sarvaiya (Daughter)"]
@@ -1272,8 +1272,8 @@
                 image: "https://ui-avatars.com/api/?name=Renaben+Sarvaiya&background=0B0B2B&color=FF00FF&size=256",
                 role: "Daughter-in-law",
                 birthdate: "January 1, 1984",
-                location: "Gujarat, India",
-                phone: "+91 XXXXX XXXXX",
+                location: "Ohio, US",
+                phone: "+1 XXXXX XXXXX",
                 email: "renaben@family.com",
                 relation: "Wife of Ajaybhai, Mother of Deivik and Devanshi",
                 family: ["Ajaybhai Sarvaiya (Husband)", "Deivik Sarvaiya (Son)", "Devanshi Sarvaiya (Daughter)"]
@@ -1282,8 +1282,8 @@
                 image: "https://ui-avatars.com/api/?name=Deivik+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
                 role: "First Grandchild",
                 birthdate: "January 1, 2010",
-                location: "Gujarat, India",
-                phone: "+91 XXXXX XXXXX",
+                location: "Ohio, US",
+                phone: "+1 XXXXX XXXXX",
                 email: "deivik@family.com",
                 relation: "Son of Ajaybhai and Renaben",
                 family: ["Ajaybhai Sarvaiya (Father)", "Renaben Sarvaiya (Mother)", "Devanshi Sarvaiya (Sister)"]
@@ -1292,8 +1292,8 @@
                 image: "https://ui-avatars.com/api/?name=Devanshi+Sarvaiya&background=0B0B2B&color=FF00FF&size=256",
                 role: "Second Grandchild",
                 birthdate: "January 1, 2012",
-                location: "Gujarat, India",
-                phone: "+91 XXXXX XXXXX",
+                location: "Ohio, US",
+                phone: "+1 XXXXX XXXXX",
                 email: "devanshi@family.com",
                 relation: "Daughter of Ajaybhai and Renaben",
                 family: ["Ajaybhai Sarvaiya (Father)", "Renaben Sarvaiya (Mother)", "Deivik Sarvaiya (Brother)"]
@@ -1372,17 +1372,34 @@
             document.getElementById('modal-image').alt = name;
             document.getElementById('info-birthdate').textContent = person.birthdate;
             document.getElementById('info-location').textContent = person.location;
-            document.getElementById('info-phone').textContent = person.phone;
-            document.getElementById('info-email').textContent = person.email;
+            document.getElementById('info-phone').innerHTML = person.phone ? `<a href="tel:${person.phone.replace(/\\s+/g, '')}" class="info-link">${person.phone}</a>` : 'N/A';
+            document.getElementById('info-email').innerHTML = person.email ? `<a href="mailto:${person.email}" class="info-link">${person.email}</a>` : 'N/A';
             document.getElementById('info-relation').textContent = person.relation;
             
-            // Set family members
+            // Add gender and maiden name if available
+            const modalSubtitle = document.getElementById('modal-subtitle');
+            let subtitleText = person.role;
+            if (person.gender) {
+                subtitleText += ` | ${person.gender.charAt(0).toUpperCase() + person.gender.slice(1)}`;
+            }
+            if (person.maidenName) {
+                subtitleText += ` | née ${person.maidenName}`;
+            }
+            modalSubtitle.textContent = subtitleText;
+            
+            // Set family members with clickable tags
             const familyMembersContainer = document.getElementById('family-members');
             familyMembersContainer.innerHTML = '';
             person.family.forEach(member => {
                 const tag = document.createElement('span');
                 tag.className = 'family-member-tag';
                 tag.textContent = member;
+                tag.style.cursor = 'pointer';
+                tag.addEventListener('click', () => {
+                    // Extract name from tag text (remove relation in parentheses)
+                    const memberName = member.split(' (')[0];
+                    showPersonDetails(memberName);
+                });
                 familyMembersContainer.appendChild(tag);
             });
             

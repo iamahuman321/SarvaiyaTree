@@ -305,6 +305,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 100%;
         }
         
         .member-action:hover {
@@ -738,15 +739,8 @@
                             <p class="stat-value">${member.phone}</p>
                         </div>
                     </div>
-                    <div class="member-actions">
-                        <button class="member-action view-details" data-name="${name}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-                            </svg>
-                            View Details
-                        </button>
-                        <button class="member-action view-tree" data-name="${name}">
+                    <div class="member-actions" style="width: 100%;">
+                        <button class="member-action view-tree full-width" data-name="${name}" style="width: 100%; justify-content: center;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
                             </svg>
@@ -763,7 +757,6 @@
                 button.addEventListener('click', function() {
                     const name = this.getAttribute('data-name');
                     alert(`Viewing details for ${name}`);
-                    // In a full implementation, this would open a modal with details
                 });
             });
             
@@ -854,6 +847,52 @@
         }
         
         createTechElements();
+    </script>
+
+    <!-- Detail Modal -->
+    <div class="modal-overlay" id="modal-overlay" style="display:none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <button class="modal-close" id="modal-close" aria-label="Close modal">&times;</button>
+                <h2 class="modal-title" id="modal-title">Member Name</h2>
+                <p class="modal-subtitle" id="modal-subtitle">Member Role</p>
+            </div>
+            <div class="modal-content">
+                <div class="modal-image-container">
+                    <img src="" alt="Member Image" class="modal-image" id="modal-image" />
+                </div>
+                <div class="modal-section">
+                    <h3 class="section-title">Personal Information</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <p class="info-label">Birth Date</p>
+                            <p class="info-value" id="info-birthdate">N/A</p>
+                        </div>
+                        <div class="info-item">
+                            <p class="info-label">Location</p>
+                            <p class="info-value" id="info-location">N/A</p>
+                        </div>
+                        <div class="info-item">
+                            <p class="info-label">Phone</p>
+                            <p class="info-value" id="info-phone">N/A</p>
+                        </div>
+                        <div class="info-item">
+                            <p class="info-label">Email</p>
+                            <p class="info-value" id="info-email">N/A</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-section">
+                    <h3 class="section-title">Family Relations</h3>
+                    <p class="info-value mb-4" id="info-relation">N/A</p>
+                    <h4 class="info-label mb-2">Immediate Family Members</h4>
+                    <div class="family-members" id="family-members"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
     </script>
 </body>
 </html>
