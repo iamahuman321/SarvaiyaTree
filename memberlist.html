@@ -1,0 +1,858 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarvaiya Family | Member List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00FFFF;
+            --neon-purple: #7B68EE;
+            --deep-blue: #0B0B2B;
+            --cyber-black: #0A0A1A;
+            --tech-gray: #1E1E2A;
+            --light-gray: #AAAAAA;
+            --highlight: #00FFFF;
+            --accent-1: #7B68EE;
+            --accent-2: #FF00FF;
+            --accent-3: #00FF9D;
+        }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--cyber-black);
+            color: white;
+            overflow-x: auto;
+            background-image: 
+                radial-gradient(circle at 25px 25px, rgba(123, 104, 238, 0.05) 2px, transparent 0),
+                radial-gradient(circle at 75px 75px, rgba(0, 255, 255, 0.05) 2px, transparent 0);
+            background-size: 100px 100px;
+        }
+        
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background-color: rgba(10, 10, 26, 0.8);
+            border-bottom: 1px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-logo span {
+            color: var(--neon-blue);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: var(--light-gray);
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: white;
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .tech-container {
+            min-height: 100vh;
+            padding: 6rem 1rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tech-title {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 3rem;
+            color: white;
+            position: relative;
+            letter-spacing: 2px;
+            margin-bottom: 3rem;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+        
+        .tech-title::before, .tech-title::after {
+            content: "//";
+            color: var(--neon-blue);
+            margin: 0 1rem;
+            font-size: 1.5rem;
+            font-weight: 400;
+            opacity: 0.7;
+        }
+        
+        .tech-subtitle {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.2rem;
+            color: var(--light-gray);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .member-card {
+            background: linear-gradient(145deg, rgba(30, 30, 42, 0.9), rgba(15, 15, 26, 0.9));
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+            border-color: var(--neon-blue);
+        }
+        
+        .member-card.male {
+            border-left: 3px solid var(--neon-blue);
+        }
+        
+        .member-card.female {
+            border-left: 3px solid var(--accent-2);
+        }
+        
+        .member-header {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .member-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+            opacity: 0.3;
+        }
+        
+        .member-image-container {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .member-image-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            background: conic-gradient(var(--neon-blue), var(--neon-purple), var(--accent-2), var(--accent-3), var(--neon-blue));
+            animation: rotate 4s linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .member-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid transparent;
+        }
+        
+        .male .member-image {
+            border-color: var(--neon-blue);
+        }
+        
+        .female .member-image {
+            border-color: var(--accent-2);
+        }
+        
+        .member-info {
+            flex: 1;
+        }
+        
+        .member-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .member-name .maiden-name {
+            font-size: 0.9rem;
+            color: var(--light-gray);
+            margin-left: 0.5rem;
+        }
+        
+        .member-role {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.9rem;
+            color: var(--neon-blue);
+            opacity: 0.9;
+        }
+        
+        .member-stats {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0 1.5rem 1rem;
+        }
+        
+        .member-stat {
+            flex: 1 0 50%;
+            margin: 0.5rem 0;
+            position: relative;
+        }
+        
+        .stat-label {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.75rem;
+            color: var(--light-gray);
+            margin-bottom: 0.2rem;
+        }
+        
+        .stat-value {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            color: white;
+        }
+        
+        .member-actions {
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .member-action {
+            font-family: 'Rajdhani', sans-serif;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            color: var(--neon-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .member-action:hover {
+            background: rgba(0, 255, 255, 0.1);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+        
+        .member-action svg {
+            margin-right: 0.5rem;
+            width: 16px;
+            height: 16px;
+        }
+        
+        .tech-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(11, 11, 43, 0.1), rgba(10, 10, 26, 0.1));
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .tech-decoration {
+            position: absolute;
+            background-color: rgba(0, 255, 255, 0.03);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            border-radius: 4px;
+            transform: rotate(45deg);
+            z-index: -1;
+        }
+        
+        .tech-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            background: transparent;
+            z-index: -1;
+        }
+        
+        .pulse {
+            animation: pulse 5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.2); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 255, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(45deg); }
+            50% { transform: translateY(-15px) rotate(45deg); }
+            100% { transform: translateY(0px) rotate(45deg); }
+        }
+        
+        .scanning {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                rgba(0, 255, 255, 0.03) 50%, 
+                transparent 100%);
+            background-size: 100% 20px;
+            animation: scan 10s linear infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        
+        .filter-controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-button {
+            font-family: 'Rajdhani', sans-serif;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-gray);
+            padding: 0.5rem 1.5rem;
+            margin: 0.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-button:hover, .filter-button.active {
+            background: rgba(0, 255, 255, 0.1);
+            border-color: var(--neon-blue);
+            color: white;
+        }
+        
+        .filter-button.active {
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+        
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border-radius: 50px;
+            color: white;
+            font-family: 'Quicksand', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--light-gray);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .member-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .tech-title {
+                font-size: 2rem;
+            }
+            
+            .tech-title::before, .tech-title::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Tech Background Elements -->
+    <div class="tech-overlay"></div>
+    <div class="scanning"></div>
+    
+    <!-- Tech Decoration Elements -->
+    <div class="tech-decoration" style="width: 150px; height: 150px; top: 20%; left: 5%; opacity: 0.5;"></div>
+    <div class="tech-decoration floating" style="width: 80px; height: 80px; top: 60%; right: 10%; opacity: 0.3;"></div>
+    <div class="tech-decoration" style="width: 120px; height: 120px; bottom: 15%; left: 15%; opacity: 0.4;"></div>
+    <div class="tech-circle pulse" style="width: 200px; height: 200px; top: 10%; right: 15%; opacity: 0.2;"></div>
+    <div class="tech-circle" style="width: 300px; height: 300px; bottom: 10%; left: 10%; opacity: 0.1;"></div>
+    
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <div class="nav-logo">
+                <span>SARVAIYA</span>&nbsp;TECH-TREE
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Family Tree</a>
+                <a href="memberlist.html" class="nav-link active">Member List</a>
+                <a href="birthdays.html" class="nav-link">Birthdays</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="tech-container">
+        <!-- Main Title -->
+        <h1 class="tech-title">Family Members</h1>
+        <p class="tech-subtitle">Complete database of all Sarvaiya family members</p>
+        
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" class="search-input" id="search-members" placeholder="Search by name, role or location...">
+            <div class="search-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+            </div>
+        </div>
+        
+        <!-- Filter Controls -->
+        <div class="filter-controls">
+            <button class="filter-button active" data-filter="all">All Members</button>
+            <button class="filter-button" data-filter="founders">Founders</button>
+            <button class="filter-button" data-filter="children">Children</button>
+            <button class="filter-button" data-filter="grandchildren">Grandchildren</button>
+            <button class="filter-button" data-filter="spouses">Spouses</button>
+        </div>
+        
+        <!-- Member Grid -->
+        <div class="member-grid" id="member-grid">
+            <!-- Members will be populated here via JavaScript -->
+        </div>
+    </div>
+    
+    <script>
+        // Family data with corrected details
+        const familyData = {
+            "Dinesh Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Dinesh+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
+                role: "Family Patriarch",
+                gender: "male",
+                birthdate: "January 1, 1950",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "dinesh@family.com",
+                relation: "Husband of Kailashben, Father of Sandip, Ajaybhai, and Varshaben",
+                family: ["Kailashben Sarvaiya (Wife)", "Sandip Sarvaiya (Son)", "Ajaybhai Sarvaiya (Son)", "Varshaben Makvana (Daughter, née Sarvaiya)"],
+                category: "founders"
+            },
+            "Kailashben Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Kailashben+Sarvaiya&background=0B0B2B&color=FF00FF&size=256",
+                role: "Family Matriarch",
+                gender: "female",
+                birthdate: "January 1, 1955",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "kailashben@family.com",
+                relation: "Wife of Dinesh, Mother of Sandip, Ajaybhai, and Varshaben",
+                family: ["Dinesh Sarvaiya (Husband)", "Sandip Sarvaiya (Son)", "Ajaybhai Sarvaiya (Son)", "Varshaben Makvana (Daughter, née Sarvaiya)"],
+                category: "founders"
+            },
+            "Sandip Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Sandip+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
+                role: "Eldest Son",
+                gender: "male",
+                birthdate: "January 1, 1980",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "sandip@family.com",
+                relation: "Son of Dinesh and Kailashben, Husband of Vandana, Father of Harsh",
+                family: ["Dinesh Sarvaiya (Father)", "Kailashben Sarvaiya (Mother)", "Vandana Sarvaiya (Wife, née Gohel)", "Harsh Sarvaiya (Son)"],
+                category: "children"
+            },
+            "Vandana Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Vandana+Gohel&background=0B0B2B&color=FF00FF&size=256",
+                role: "Daughter-in-law",
+                gender: "female",
+                birthdate: "January 1, 1982",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "vandana@family.com",
+                relation: "Wife of Sandip (née Gohel), Mother of Harsh",
+                family: ["Sandip Sarvaiya (Husband)", "Harsh Sarvaiya (Son)"],
+                maidenName: "Gohel",
+                category: "spouses"
+            },
+            "Harsh Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Harsh+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
+                role: "Only Child",
+                gender: "male",
+                birthdate: "January 1, 2005",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "harsh@family.com",
+                relation: "Son of Sandip and Vandana",
+                family: ["Sandip Sarvaiya (Father)", "Vandana Sarvaiya (Mother, née Gohel)"],
+                category: "grandchildren"
+            },
+            "Ajaybhai Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Ajaybhai+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
+                role: "Middle Son",
+                gender: "male",
+                birthdate: "January 1, 1982",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "ajaybhai@family.com",
+                relation: "Son of Dinesh and Kailashben, Husband of Renaben, Father of Deivik and Devanshi",
+                family: ["Dinesh Sarvaiya (Father)", "Kailashben Sarvaiya (Mother)", "Renaben Sarvaiya (Wife)", "Deivik Sarvaiya (Son)", "Devanshi Sarvaiya (Daughter)"],
+                category: "children"
+            },
+            "Renaben Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Renaben+Sarvaiya&background=0B0B2B&color=FF00FF&size=256",
+                role: "Daughter-in-law",
+                gender: "female",
+                birthdate: "January 1, 1984",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "renaben@family.com",
+                relation: "Wife of Ajaybhai, Mother of Deivik and Devanshi",
+                family: ["Ajaybhai Sarvaiya (Husband)", "Deivik Sarvaiya (Son)", "Devanshi Sarvaiya (Daughter)"],
+                category: "spouses"
+            },
+            "Deivik Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Deivik+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
+                role: "First Grandchild",
+                gender: "male",
+                birthdate: "January 1, 2010",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "deivik@family.com",
+                relation: "Son of Ajaybhai and Renaben",
+                family: ["Ajaybhai Sarvaiya (Father)", "Renaben Sarvaiya (Mother)", "Devanshi Sarvaiya (Sister)"],
+                category: "grandchildren"
+            },
+            "Devanshi Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Devanshi+Sarvaiya&background=0B0B2B&color=FF00FF&size=256",
+                role: "Second Grandchild",
+                gender: "female",
+                birthdate: "January 1, 2012",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "devanshi@family.com",
+                relation: "Daughter of Ajaybhai and Renaben",
+                family: ["Ajaybhai Sarvaiya (Father)", "Renaben Sarvaiya (Mother)", "Deivik Sarvaiya (Brother)"],
+                category: "grandchildren"
+            },
+            "Varshaben Makvana": {
+                image: "https://ui-avatars.com/api/?name=Varshaben+Makvana&background=0B0B2B&color=FF00FF&size=256",
+                role: "Daughter",
+                gender: "female",
+                birthdate: "January 1, 1985",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "varshaben@family.com",
+                relation: "Daughter of Dinesh and Kailashben (née Sarvaiya), Wife of Foa, Mother of Vraj and Richa",
+                family: ["Dinesh Sarvaiya (Father)", "Kailashben Sarvaiya (Mother)", "Foa Makvana (Husband)", "Vraj Makvana (Son)", "Richa Makvana (Daughter)"],
+                maidenName: "Sarvaiya",
+                category: "children"
+            },
+            "Foa Makvana": {
+                image: "https://ui-avatars.com/api/?name=Foa+Makvana&background=0B0B2B&color=00FFFF&size=256",
+                role: "Son-in-law",
+                gender: "male",
+                birthdate: "January 1, 1983",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "foa@family.com",
+                relation: "Husband of Varshaben, Father of Vraj and Richa",
+                family: ["Varshaben Makvana (Wife, née Sarvaiya)", "Vraj Makvana (Son)", "Richa Makvana (Daughter)"],
+                category: "spouses"
+            },
+            "Vraj Makvana": {
+                image: "https://ui-avatars.com/api/?name=Vraj+Makvana&background=0B0B2B&color=00FFFF&size=256",
+                role: "Third Grandchild",
+                gender: "male",
+                birthdate: "January 1, 2011",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "vraj@family.com",
+                relation: "Son of Varshaben and Foa",
+                family: ["Varshaben Makvana (Mother, née Sarvaiya)", "Foa Makvana (Father)", "Richa Makvana (Sister)"],
+                category: "grandchildren"
+            },
+            "Richa Makvana": {
+                image: "https://ui-avatars.com/api/?name=Richa+Makvana&background=0B0B2B&color=FF00FF&size=256",
+                role: "Fourth Grandchild",
+                gender: "female",
+                birthdate: "January 1, 2014",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "richa@family.com",
+                relation: "Daughter of Varshaben and Foa",
+                family: ["Varshaben Makvana (Mother, née Sarvaiya)", "Foa Makvana (Father)", "Vraj Makvana (Brother)"],
+                category: "grandchildren"
+            }
+        };
+
+        // Populate member grid
+        function populateMembers(filter = 'all') {
+            const memberGrid = document.getElementById('member-grid');
+            memberGrid.innerHTML = '';
+            
+            for (const [name, member] of Object.entries(familyData)) {
+                if (filter !== 'all' && member.category !== filter) continue;
+                
+                const card = document.createElement('div');
+                card.className = `member-card ${member.gender}`;
+                
+                // Create HTML for card
+                card.innerHTML = `
+                    <div class="member-header">
+                        <div class="member-image-container">
+                            <img src="${member.image}" alt="${name}" class="member-image">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">
+                                ${name}
+                                ${member.maidenName ? `<span class="maiden-name">(née ${member.maidenName})</span>` : ''}
+                            </h3>
+                            <p class="member-role">${member.role}</p>
+                        </div>
+                    </div>
+                    <div class="member-stats">
+                        <div class="member-stat">
+                            <p class="stat-label">Birthdate</p>
+                            <p class="stat-value">${member.birthdate}</p>
+                        </div>
+                        <div class="member-stat">
+                            <p class="stat-label">Location</p>
+                            <p class="stat-value">${member.location}</p>
+                        </div>
+                        <div class="member-stat">
+                            <p class="stat-label">Email</p>
+                            <p class="stat-value">${member.email}</p>
+                        </div>
+                        <div class="member-stat">
+                            <p class="stat-label">Phone</p>
+                            <p class="stat-value">${member.phone}</p>
+                        </div>
+                    </div>
+                    <div class="member-actions">
+                        <button class="member-action view-details" data-name="${name}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                            </svg>
+                            View Details
+                        </button>
+                        <button class="member-action view-tree" data-name="${name}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            Family Tree
+                        </button>
+                    </div>
+                `;
+                
+                memberGrid.appendChild(card);
+            }
+            
+            // Add event listeners to buttons
+            document.querySelectorAll('.view-details').forEach(button => {
+                button.addEventListener('click', function() {
+                    const name = this.getAttribute('data-name');
+                    alert(`Viewing details for ${name}`);
+                    // In a full implementation, this would open a modal with details
+                });
+            });
+            
+            document.querySelectorAll('.view-tree').forEach(button => {
+                button.addEventListener('click', function() {
+                    const name = this.getAttribute('data-name');
+                    window.location.href = 'index.html';
+                    // In a full implementation, this would navigate to the tree and highlight this person
+                });
+            });
+        }
+        
+        // Initialize with all members
+        populateMembers();
+        
+        // Filter buttons
+        document.querySelectorAll('.filter-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const filter = this.getAttribute('data-filter');
+                
+                // Update active state
+                document.querySelectorAll('.filter-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Filter members
+                populateMembers(filter);
+            });
+        });
+        
+        // Search functionality
+        const searchInput = document.getElementById('search-members');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const memberCards = document.querySelectorAll('.member-card');
+            
+            memberCards.forEach(card => {
+                const name = card.querySelector('.member-name').textContent.toLowerCase();
+                const role = card.querySelector('.member-role').textContent.toLowerCase();
+                const location = card.querySelector('.stat-value:nth-of-type(2)').textContent.toLowerCase();
+                
+                if (name.includes(searchTerm) || role.includes(searchTerm) || location.includes(searchTerm)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+        
+        // Add tech decoration elements dynamically
+        function createTechElements() {
+            const container = document.querySelector('.tech-container');
+            
+            for (let i = 0; i < 15; i++) {
+                const size = Math.random() * 50 + 10;
+                const tech = document.createElement('div');
+                tech.className = 'tech-decoration';
+                tech.style.width = `${size}px`;
+                tech.style.height = `${size}px`;
+                tech.style.top = `${Math.random() * 100}%`;
+                tech.style.left = `${Math.random() * 100}%`;
+                tech.style.opacity = Math.random() * 0.15;
+                
+                if (Math.random() > 0.7) {
+                    tech.classList.add('floating');
+                }
+                
+                container.appendChild(tech);
+            }
+            
+            for (let i = 0; i < 5; i++) {
+                const size = Math.random() * 150 + 50;
+                const circle = document.createElement('div');
+                circle.className = 'tech-circle';
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                circle.style.top = `${Math.random() * 100}%`;
+                circle.style.left = `${Math.random() * 100}%`;
+                circle.style.opacity = Math.random() * 0.1;
+                
+                if (Math.random() > 0.5) {
+                    circle.classList.add('pulse');
+                }
+                
+                container.appendChild(circle);
+            }
+        }
+        
+        createTechElements();
+    </script>
+</body>
+</html>
