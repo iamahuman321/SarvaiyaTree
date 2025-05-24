@@ -1,0 +1,1139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarvaiya Family | Statistics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --neon-blue: #00FFFF;
+            --neon-purple: #7B68EE;
+            --deep-blue: #0B0B2B;
+            --cyber-black: #0A0A1A;
+            --tech-gray: #1E1E2A;
+            --light-gray: #AAAAAA;
+            --highlight: #00FFFF;
+            --accent-1: #7B68EE;
+            --accent-2: #FF00FF;
+            --accent-3: #00FF9D;
+        }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--cyber-black);
+            color: white;
+            overflow-x: auto;
+            background-image: 
+                radial-gradient(circle at 25px 25px, rgba(123, 104, 238, 0.05) 2px, transparent 0),
+                radial-gradient(circle at 75px 75px, rgba(0, 255, 255, 0.05) 2px, transparent 0);
+            background-size: 100px 100px;
+        }
+        
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background-color: rgba(10, 10, 26, 0.8);
+            border-bottom: 1px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-logo span {
+            color: var(--neon-blue);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: var(--light-gray);
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: white;
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .tech-container {
+            min-height: 100vh;
+            padding: 6rem 1rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tech-title {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 3rem;
+            color: white;
+            position: relative;
+            letter-spacing: 2px;
+            margin-bottom: 3rem;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+        
+        .tech-title::before, .tech-title::after {
+            content: "//";
+            color: var(--neon-blue);
+            margin: 0 1rem;
+            font-size: 1.5rem;
+            font-weight: 400;
+            opacity: 0.7;
+        }
+        
+        .tech-subtitle {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.2rem;
+            color: var(--light-gray);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 992px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .stat-card {
+            background: linear-gradient(145deg, rgba(30, 30, 42, 0.9), rgba(15, 15, 26, 0.9));
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+        }
+        
+        .stat-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            position: relative;
+        }
+        
+        .stat-title::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(to right, var(--neon-blue), var(--neon-purple));
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        
+        .doughnut-container {
+            width: 70%;
+            margin: 0 auto;
+        }
+        
+        .stat-highlight {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1.5rem;
+        }
+        
+        .highlight-item {
+            text-align: center;
+        }
+        
+        .highlight-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight-label {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.9rem;
+            color: var(--light-gray);
+        }
+        
+        .family-map {
+            height: 300px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .map-placeholder {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/3/36/Map_of_Gujarat.png') center/contain no-repeat;
+            opacity: 0.3;
+        }
+        
+        .map-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px var(--neon-blue);
+            animation: pulse 2s infinite;
+        }
+        
+        .map-label {
+            position: absolute;
+            color: white;
+            font-size: 0.8rem;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            padding: 2px 8px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 4px;
+            margin-top: -20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .map-dot:hover + .map-label {
+            opacity: 1;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .data-table th {
+            text-align: left;
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            color: var(--neon-blue);
+        }
+        
+        .data-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .data-table tr:hover {
+            background: rgba(0, 255, 255, 0.05);
+        }
+        
+        .tech-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(11, 11, 43, 0.1), rgba(10, 10, 26, 0.1));
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .tech-decoration {
+            position: absolute;
+            background-color: rgba(0, 255, 255, 0.03);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            border-radius: 4px;
+            transform: rotate(45deg);
+            z-index: -1;
+        }
+        
+        .tech-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            background: transparent;
+            z-index: -1;
+        }
+        
+        .pulse {
+            animation: pulse 5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.2); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 255, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(45deg); }
+            50% { transform: translateY(-15px) rotate(45deg); }
+            100% { transform: translateY(0px) rotate(45deg); }
+        }
+        
+        .scanning {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                rgba(0, 255, 255, 0.03) 50%, 
+                transparent 100%);
+            background-size: 100% 20px;
+            animation: scan 10s linear infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        
+        /* Table Scan Effect */
+        .scan-effect {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                rgba(0, 255, 255, 0.1) 50%, 
+                transparent 100%);
+            background-size: 100% 10px;
+            animation: tableScan 3s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        @keyframes tableScan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .tech-title {
+                font-size: 2rem;
+            }
+            
+            .tech-title::before, .tech-title::after {
+                display: none;
+            }
+            
+            .highlight-value {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Tech Background Elements -->
+    <div class="tech-overlay"></div>
+    <div class="scanning"></div>
+    
+    <!-- Tech Decoration Elements -->
+    <div class="tech-decoration" style="width: 150px; height: 150px; top: 20%; left: 5%; opacity: 0.5;"></div>
+    <div class="tech-decoration floating" style="width: 80px; height: 80px; top: 60%; right: 10%; opacity: 0.3;"></div>
+    <div class="tech-decoration" style="width: 120px; height: 120px; bottom: 15%; left: 15%; opacity: 0.4;"></div>
+    <div class="tech-circle pulse" style="width: 200px; height: 200px; top: 10%; right: 15%; opacity: 0.2;"></div>
+    <div class="tech-circle" style="width: 300px; height: 300px; bottom: 10%; left: 10%; opacity: 0.1;"></div>
+    
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <div class="nav-logo">
+                <span>SARVAIYA</span>&nbsp;TECH-TREE
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Family Tree</a>
+                <a href="memberlist.html" class="nav-link">Member List</a>
+                <a href="birthdays.html" class="nav-link">Birthdays</a>
+                <a href="statistics.html" class="nav-link active">Statistics</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="tech-container">
+        <!-- Main Title -->
+        <h1 class="tech-title">Family Statistics</h1>
+        <p class="tech-subtitle">Data insights and analytics of the Sarvaiya family</p>
+        
+        <!-- Statistics Grid -->
+        <div class="stats-grid">
+            <!-- Gender Distribution -->
+            <div class="stat-card">
+                <h2 class="stat-title">Gender Distribution</h2>
+                <div class="doughnut-container">
+                    <canvas id="genderChart"></canvas>
+                </div>
+                <div class="stat-highlight">
+                    <div class="highlight-item">
+                        <div class="highlight-value" id="maleCount">7</div>
+                        <div class="highlight-label">Males</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-value" id="femaleCount">5</div>
+                        <div class="highlight-label">Females</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Age Distribution -->
+            <div class="stat-card">
+                <h2 class="stat-title">Age Distribution</h2>
+                <div class="chart-container">
+                    <canvas id="ageChart"></canvas>
+                </div>
+                <div class="stat-highlight">
+                    <div class="highlight-item">
+                        <div class="highlight-value" id="averageAge">33.6</div>
+                        <div class="highlight-label">Average Age</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-value" id="youngestAge">9</div>
+                        <div class="highlight-label">Youngest</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-value" id="oldestAge">74</div>
+                        <div class="highlight-label">Oldest</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Generation Breakdown -->
+            <div class="stat-card">
+                <h2 class="stat-title">Generation Breakdown</h2>
+                <div class="chart-container">
+                    <canvas id="generationChart"></canvas>
+                </div>
+                <div class="stat-highlight">
+                    <div class="highlight-item">
+                        <div class="highlight-value">3</div>
+                        <div class="highlight-label">Generations</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-value">4</div>
+                        <div class="highlight-label">Grandchildren</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Birth Month Distribution -->
+            <div class="stat-card">
+                <h2 class="stat-title">Birth Month Distribution</h2>
+                <div class="chart-container">
+                    <canvas id="monthChart"></canvas>
+                </div>
+                <div class="stat-highlight">
+                    <div class="highlight-item">
+                        <div class="highlight-value" id="popularMonth">Dec</div>
+                        <div class="highlight-label">Most Popular</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Family Location Map -->
+            <div class="stat-card">
+                <h2 class="stat-title">Family Location Map</h2>
+                <div class="family-map">
+                    <div class="map-placeholder">
+                        <!-- Family location dots will be added dynamically -->
+                    </div>
+                </div>
+                <div class="stat-highlight">
+                    <div class="highlight-item">
+                        <div class="highlight-value">Gujarat</div>
+                        <div class="highlight-label">Main Location</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-value">100%</div>
+                        <div class="highlight-label">In Same Region</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Family Data Table -->
+            <div class="stat-card">
+                <h2 class="stat-title">Member Details</h2>
+                <div style="position: relative; overflow: hidden;">
+                    <div class="scan-effect"></div>
+                    <div style="overflow-x: auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Birth Year</th>
+                                    <th>Age</th>
+                                    <th>Generation</th>
+                                </tr>
+                            </thead>
+                            <tbody id="familyTableBody">
+                                <!-- Table will be populated via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Family data with corrected details
+        const familyData = {
+            "Dinesh Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Dinesh+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
+                role: "Family Patriarch",
+                gender: "male",
+                birthdate: "January 1, 1950",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "dinesh@family.com",
+                relation: "Husband of Kailashben, Father of Sandip, Ajaybhai, and Varshaben",
+                family: ["Kailashben Sarvaiya (Wife)", "Sandip Sarvaiya (Son)", "Ajaybhai Sarvaiya (Son)", "Varshaben Makvana (Daughter, née Sarvaiya)"],
+                generation: "Founders"
+            },
+            "Kailashben Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Kailashben+Sarvaiya&background=0B0B2B&color=FF00FF&size=256",
+                role: "Family Matriarch",
+                gender: "female",
+                birthdate: "January 1, 1955",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "kailashben@family.com",
+                relation: "Wife of Dinesh, Mother of Sandip, Ajaybhai, and Varshaben",
+                family: ["Dinesh Sarvaiya (Husband)", "Sandip Sarvaiya (Son)", "Ajaybhai Sarvaiya (Son)", "Varshaben Makvana (Daughter, née Sarvaiya)"],
+                generation: "Founders"
+            },
+            "Sandip Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Sandip+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
+                role: "Eldest Son",
+                gender: "male",
+                birthdate: "March 15, 1980",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "sandip@family.com",
+                relation: "Son of Dinesh and Kailashben, Husband of Vandana, Father of Harsh",
+                family: ["Dinesh Sarvaiya (Father)", "Kailashben Sarvaiya (Mother)", "Vandana Sarvaiya (Wife, née Gohel)", "Harsh Sarvaiya (Son)"],
+                generation: "First Generation"
+            },
+            "Vandana Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Vandana+Gohel&background=0B0B2B&color=FF00FF&size=256",
+                role: "Daughter-in-law",
+                gender: "female",
+                birthdate: "April 22, 1982",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "vandana@family.com",
+                relation: "Wife of Sandip (née Gohel), Mother of Harsh",
+                family: ["Sandip Sarvaiya (Husband)", "Harsh Sarvaiya (Son)"],
+                maidenName: "Gohel",
+                generation: "First Generation"
+            },
+            "Harsh Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Harsh+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
+                role: "Only Child",
+                gender: "male",
+                birthdate: "September 10, 2005",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "harsh@family.com",
+                relation: "Son of Sandip and Vandana",
+                family: ["Sandip Sarvaiya (Father)", "Vandana Sarvaiya (Mother, née Gohel)"],
+                generation: "Second Generation"
+            },
+            "Ajaybhai Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Ajaybhai+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
+                role: "Middle Son",
+                gender: "male",
+                birthdate: "July 8, 1982",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "ajaybhai@family.com",
+                relation: "Son of Dinesh and Kailashben, Husband of Renaben, Father of Deivik and Devanshi",
+                family: ["Dinesh Sarvaiya (Father)", "Kailashben Sarvaiya (Mother)", "Renaben Sarvaiya (Wife)", "Deivik Sarvaiya (Son)", "Devanshi Sarvaiya (Daughter)"],
+                generation: "First Generation"
+            },
+            "Renaben Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Renaben+Sarvaiya&background=0B0B2B&color=FF00FF&size=256",
+                role: "Daughter-in-law",
+                gender: "female",
+                birthdate: "October 15, 1984",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "renaben@family.com",
+                relation: "Wife of Ajaybhai, Mother of Deivik and Devanshi",
+                family: ["Ajaybhai Sarvaiya (Husband)", "Deivik Sarvaiya (Son)", "Devanshi Sarvaiya (Daughter)"],
+                generation: "First Generation"
+            },
+            "Deivik Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Deivik+Sarvaiya&background=0B0B2B&color=00FFFF&size=256",
+                role: "First Grandchild",
+                gender: "male",
+                birthdate: "February 18, 2010",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "deivik@family.com",
+                relation: "Son of Ajaybhai and Renaben",
+                family: ["Ajaybhai Sarvaiya (Father)", "Renaben Sarvaiya (Mother)", "Devanshi Sarvaiya (Sister)"],
+                generation: "Second Generation"
+            },
+            "Devanshi Sarvaiya": {
+                image: "https://ui-avatars.com/api/?name=Devanshi+Sarvaiya&background=0B0B2B&color=FF00FF&size=256",
+                role: "Second Grandchild",
+                gender: "female",
+                birthdate: "June 5, 2012",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "devanshi@family.com",
+                relation: "Daughter of Ajaybhai and Renaben",
+                family: ["Ajaybhai Sarvaiya (Father)", "Renaben Sarvaiya (Mother)", "Deivik Sarvaiya (Brother)"],
+                generation: "Second Generation"
+            },
+            "Varshaben Makvana": {
+                image: "https://ui-avatars.com/api/?name=Varshaben+Makvana&background=0B0B2B&color=FF00FF&size=256",
+                role: "Daughter",
+                gender: "female",
+                birthdate: "May 27, 1985",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "varshaben@family.com",
+                relation: "Daughter of Dinesh and Kailashben (née Sarvaiya), Wife of Foa, Mother of Vraj and Richa",
+                family: ["Dinesh Sarvaiya (Father)", "Kailashben Sarvaiya (Mother)", "Foa Makvana (Husband)", "Vraj Makvana (Son)", "Richa Makvana (Daughter)"],
+                maidenName: "Sarvaiya",
+                generation: "First Generation"
+            },
+            "Foa Makvana": {
+                image: "https://ui-avatars.com/api/?name=Foa+Makvana&background=0B0B2B&color=00FFFF&size=256",
+                role: "Son-in-law",
+                gender: "male",
+                birthdate: "November 11, 1983",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "foa@family.com",
+                relation: "Husband of Varshaben, Father of Vraj and Richa",
+                family: ["Varshaben Makvana (Wife, née Sarvaiya)", "Vraj Makvana (Son)", "Richa Makvana (Daughter)"],
+                generation: "First Generation"
+            },
+            "Vraj Makvana": {
+                image: "https://ui-avatars.com/api/?name=Vraj+Makvana&background=0B0B2B&color=00FFFF&size=256",
+                role: "Third Grandchild",
+                gender: "male",
+                birthdate: "August 30, 2011",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "vraj@family.com",
+                relation: "Son of Varshaben and Foa",
+                family: ["Varshaben Makvana (Mother, née Sarvaiya)", "Foa Makvana (Father)", "Richa Makvana (Sister)"],
+                generation: "Second Generation"
+            },
+            "Richa Makvana": {
+                image: "https://ui-avatars.com/api/?name=Richa+Makvana&background=0B0B2B&color=FF00FF&size=256",
+                role: "Fourth Grandchild",
+                gender: "female",
+                birthdate: "December 25, 2014",
+                location: "Gujarat, India",
+                phone: "+91 XXXXX XXXXX",
+                email: "richa@family.com",
+                relation: "Daughter of Varshaben and Foa",
+                family: ["Varshaben Makvana (Mother, née Sarvaiya)", "Foa Makvana (Father)", "Vraj Makvana (Brother)"],
+                generation: "Second Generation"
+            }
+        };
+
+        // Helper function to get age from birthdate
+        function getAge(birthdate) {
+            const birthdateParts = birthdate.split(' ');
+            const month = birthdateParts[0];
+            const day = parseInt(birthdateParts[1].replace(',', ''));
+            const year = parseInt(birthdateParts[2]);
+            
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            
+            // Calculate basic age
+            let age = currentYear - year;
+            
+            // Adjust age if birthday hasn't occurred yet this year
+            const monthNames = ["January", "February", "March", "April", "May", "June", 
+                               "July", "August", "September", "October", "November", "December"];
+            const birthMonth = monthNames.indexOf(month);
+            const currentMonth = currentDate.getMonth();
+            
+            if (currentMonth < birthMonth || (currentMonth === birthMonth && currentDate.getDate() < day)) {
+                age--;
+            }
+            
+            return age;
+        }
+
+        // Calculate statistics
+        function calculateStats() {
+            // Gender counts
+            let maleCount = 0;
+            let femaleCount = 0;
+            
+            // Age statistics
+            let totalAge = 0;
+            let minAge = Infinity;
+            let maxAge = 0;
+            
+            // Generation counts
+            const generationCounts = {
+                "Founders": 0,
+                "First Generation": 0,
+                "Second Generation": 0
+            };
+            
+            // Birth month distribution
+            const monthCounts = {
+                "January": 0, "February": 0, "March": 0, "April": 0,
+                "May": 0, "June": 0, "July": 0, "August": 0,
+                "September": 0, "October": 0, "November": 0, "December": 0
+            };
+            
+            // Populate family table
+            const tableBody = document.getElementById('familyTableBody');
+            tableBody.innerHTML = '';
+            
+            for (const [name, data] of Object.entries(familyData)) {
+                // Gender count
+                if (data.gender === 'male') {
+                    maleCount++;
+                } else {
+                    femaleCount++;
+                }
+                
+                // Age statistics
+                const age = getAge(data.birthdate);
+                totalAge += age;
+                minAge = Math.min(minAge, age);
+                maxAge = Math.max(maxAge, age);
+                
+                // Generation counts
+                generationCounts[data.generation]++;
+                
+                // Birth month
+                const month = data.birthdate.split(' ')[0];
+                monthCounts[month]++;
+                
+                // Add to table
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${name}</td>
+                    <td>${data.birthdate.split(' ')[2]}</td>
+                    <td>${age}</td>
+                    <td>${data.generation}</td>
+                `;
+                tableBody.appendChild(row);
+            }
+            
+            const averageAge = (totalAge / Object.keys(familyData).length).toFixed(1);
+            
+            // Find most popular birth month
+            let maxCount = 0;
+            let popularMonth = '';
+            for (const [month, count] of Object.entries(monthCounts)) {
+                if (count > maxCount) {
+                    maxCount = count;
+                    popularMonth = month;
+                }
+            }
+            
+            // Update highlight values
+            document.getElementById('maleCount').textContent = maleCount;
+            document.getElementById('femaleCount').textContent = femaleCount;
+            document.getElementById('averageAge').textContent = averageAge;
+            document.getElementById('youngestAge').textContent = minAge;
+            document.getElementById('oldestAge').textContent = maxAge;
+            document.getElementById('popularMonth').textContent = popularMonth.substring(0, 3);
+            
+            return {
+                genderData: [maleCount, femaleCount],
+                generationData: Object.values(generationCounts),
+                generationLabels: Object.keys(generationCounts),
+                monthData: Object.values(monthCounts),
+                monthLabels: Object.keys(monthCounts).map(month => month.substring(0, 3))
+            };
+        }
+
+        // Create age distribution data
+        function createAgeDistribution() {
+            const ageGroups = {
+                "0-10": 0,
+                "11-20": 0,
+                "21-30": 0,
+                "31-40": 0,
+                "41-50": 0,
+                "51-60": 0,
+                "61-70": 0,
+                "71+": 0
+            };
+            
+            for (const data of Object.values(familyData)) {
+                const age = getAge(data.birthdate);
+                
+                if (age <= 10) ageGroups["0-10"]++;
+                else if (age <= 20) ageGroups["11-20"]++;
+                else if (age <= 30) ageGroups["21-30"]++;
+                else if (age <= 40) ageGroups["31-40"]++;
+                else if (age <= 50) ageGroups["41-50"]++;
+                else if (age <= 60) ageGroups["51-60"]++;
+                else if (age <= 70) ageGroups["61-70"]++;
+                else ageGroups["71+"]++;
+            }
+            
+            return {
+                labels: Object.keys(ageGroups),
+                data: Object.values(ageGroups)
+            };
+        }
+
+        // Initialize charts
+        function initCharts(stats) {
+            // Gender distribution chart
+            const genderCtx = document.getElementById('genderChart').getContext('2d');
+            new Chart(genderCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Male', 'Female'],
+                    datasets: [{
+                        data: stats.genderData,
+                        backgroundColor: ['#00FFFF', '#FF00FF'],
+                        borderColor: '#0A0A1A',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#FFFFFF',
+                                font: {
+                                    family: 'Quicksand'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Age distribution chart
+            const ageData = createAgeDistribution();
+            const ageCtx = document.getElementById('ageChart').getContext('2d');
+            new Chart(ageCtx, {
+                type: 'bar',
+                data: {
+                    labels: ageData.labels,
+                    datasets: [{
+                        label: 'Number of Members',
+                        data: ageData.data,
+                        backgroundColor: function(context) {
+                            const index = context.dataIndex;
+                            const value = context.dataset.data[index];
+                            return value > 0 
+                                ? `rgba(0, 255, 255, ${0.3 + index * 0.1})`
+                                : 'rgba(0, 255, 255, 0.1)';
+                        },
+                        borderColor: '#00FFFF',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: '#AAAAAA',
+                                font: {
+                                    family: 'Quicksand'
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#AAAAAA',
+                                font: {
+                                    family: 'Quicksand'
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+            
+            // Generation breakdown chart
+            const generationCtx = document.getElementById('generationChart').getContext('2d');
+            new Chart(generationCtx, {
+                type: 'pie',
+                data: {
+                    labels: stats.generationLabels,
+                    datasets: [{
+                        data: stats.generationData,
+                        backgroundColor: [
+                            'rgba(123, 104, 238, 0.7)',
+                            'rgba(0, 255, 255, 0.7)',
+                            'rgba(0, 255, 157, 0.7)'
+                        ],
+                        borderColor: '#0A0A1A',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#FFFFFF',
+                                font: {
+                                    family: 'Quicksand'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Birth month distribution chart
+            const monthCtx = document.getElementById('monthChart').getContext('2d');
+            new Chart(monthCtx, {
+                type: 'line',
+                data: {
+                    labels: stats.monthLabels,
+                    datasets: [{
+                        label: 'Birthdays',
+                        data: stats.monthData,
+                        backgroundColor: 'rgba(255, 0, 255, 0.2)',
+                        borderColor: '#FF00FF',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#FF00FF',
+                        pointBorderColor: '#FF00FF',
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1,
+                                color: '#AAAAAA',
+                                font: {
+                                    family: 'Quicksand'
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#AAAAAA',
+                                font: {
+                                    family: 'Quicksand'
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // Add location dots to the map
+        function addLocationDots() {
+            const mapPlaceholder = document.querySelector('.map-placeholder');
+            
+            // These would normally be proper coordinates, just for demo
+            const locations = [
+                { name: "Dinesh & Kailashben", x: "50%", y: "50%" },
+                { name: "Sandip's Family", x: "45%", y: "55%" },
+                { name: "Ajaybhai's Family", x: "55%", y: "45%" },
+                { name: "Varshaben's Family", x: "48%", y: "52%" }
+            ];
+            
+            locations.forEach(location => {
+                const dot = document.createElement('div');
+                dot.className = 'map-dot';
+                dot.style.left = location.x;
+                dot.style.top = location.y;
+                
+                const label = document.createElement('div');
+                label.className = 'map-label';
+                label.textContent = location.name;
+                label.style.left = location.x;
+                label.style.top = location.y;
+                
+                mapPlaceholder.appendChild(dot);
+                mapPlaceholder.appendChild(label);
+            });
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            const stats = calculateStats();
+            initCharts(stats);
+            addLocationDots();
+            
+            // Add tech decoration elements dynamically
+            function createTechElements() {
+                const container = document.querySelector('.tech-container');
+                
+                for (let i = 0; i < 15; i++) {
+                    const size = Math.random() * 50 + 10;
+                    const tech = document.createElement('div');
+                    tech.className = 'tech-decoration';
+                    tech.style.width = `${size}px`;
+                    tech.style.height = `${size}px`;
+                    tech.style.top = `${Math.random() * 100}%`;
+                    tech.style.left = `${Math.random() * 100}%`;
+                    tech.style.opacity = Math.random() * 0.15;
+                    
+                    if (Math.random() > 0.7) {
+                        tech.classList.add('floating');
+                    }
+                    
+                    container.appendChild(tech);
+                }
+                
+                for (let i = 0; i < 5; i++) {
+                    const size = Math.random() * 150 + 50;
+                    const circle = document.createElement('div');
+                    circle.className = 'tech-circle';
+                    circle.style.width = `${size}px`;
+                    circle.style.height = `${size}px`;
+                    circle.style.top = `${Math.random() * 100}%`;
+                    circle.style.left = `${Math.random() * 100}%`;
+                    circle.style.opacity = Math.random() * 0.1;
+                    
+                    if (Math.random() > 0.5) {
+                        circle.classList.add('pulse');
+                    }
+                    
+                    container.appendChild(circle);
+                }
+            }
+            
+            createTechElements();
+        });
+    </script>
+</body>
+</html>
